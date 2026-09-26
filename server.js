@@ -45,7 +45,12 @@ app.get('/api/planes/:id', (req, res) => {
 // Statische bestanden mogen lang gecachet worden: de ?v=... in de HTML
 // verandert bij elke deploy, dus een nieuwe versie krijgt vanzelf een
 // nieuwe URL en omzeilt zo de cache van de browser.
-app.use(express.static(path.join(__dirname, 'public'), { maxAge: '7d' }));
+//
+// index: false is cruciaal: zonder deze optie serveert express.static
+// public/index.html automatisch en ongewijzigd (met dezelfde lange
+// cache-header!) zodra iemand "/" opvraagt, nog vóórdat de catch-all route
+// hieronder de kans krijgt om de ?v=... en het versienummer erin te zetten.
+app.use(express.static(path.join(__dirname, 'public'), { maxAge: '7d', index: false }));
 
 app.get('*', (req, res) => {
   // index.html zelf nooit cachen, anders blijft een browser een oude

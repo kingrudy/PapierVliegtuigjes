@@ -1,6 +1,6 @@
 {
   "name": "papieren-vliegtuigjes",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Fancy collectie van papieren vliegtuigjes met vouwinstructies",
   "main": "server.js",
   "scripts": {
