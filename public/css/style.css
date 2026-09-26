@@ -184,6 +184,9 @@ a { color: inherit; }
 .about p { color: var(--text-dim); line-height: 1.7; }
 
 .site-footer { position: relative; z-index: 1; border-top: 1px solid var(--panel-border); padding: 28px 0; color: var(--text-dim); font-size: 0.85rem; }
+.footer-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+.footer-row p { margin: 0; }
+.version-tag { font-family: 'Space Grotesk', monospace; font-size: 0.75rem; opacity: 0.6; }
 
 /* -------- detail overlay -------- */
 .detail-overlay {
