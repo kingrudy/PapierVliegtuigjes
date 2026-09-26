@@ -6,20 +6,27 @@ vouwinstructies, geïllustreerde vouwdiagrammen, en filters op vliegstijl
 
 ## Draaien met Docker (aanbevolen)
 
-Zorg dat [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-draait, open dan een terminal in deze map en voer uit:
+De `docker-compose.yml` publiceert bewust **geen vaste host-poort** — dat
+is nodig om zonder poortconflicten te draaien achter een reverse proxy of
+op een deploy-platform met subdomain-routing (Traefik, Coolify, Dokploy,
+enz.), die zelf naar de container-poort 3000 routeren.
+
+Draai je dit rechtstreeks op je eigen machine (zonder platform ervoor)?
+Voeg dan zelf een host-poort toe in `docker-compose.yml`:
+
+```yaml
+    ports:
+      - "8080:3000"
+```
+
+en start met:
 
 ```bash
 docker compose up --build
 ```
 
-De site is daarna te bereiken op **http://localhost:8080**.
-
-Stoppen doe je met `Ctrl+C`, of in een andere terminal met:
-
-```bash
-docker compose down
-```
+De site is dan te bereiken op **http://localhost:8080**. Stoppen doe je
+met `Ctrl+C`, of in een andere terminal met `docker compose down`.
 
 ### Zonder docker-compose (losse Docker-commando's)
 

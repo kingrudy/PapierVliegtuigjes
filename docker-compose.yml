@@ -2,6 +2,16 @@ services:
   papervliegtuigjes:
     build: .
     container_name: papervliegtuigjes
-    ports:
-      - "8080:3000"
     restart: unless-stopped
+    expose:
+      - "3000"
+    environment:
+      - PORT=3000
+    # Geen vaste host-poort: op een gedeelde server bindt een reverse proxy
+    # (Traefik, nginx, of het deploy-platform zelf) direct op het Docker-
+    # netwerk naar poort 3000 van deze container, o.b.v. het subdomein.
+    #
+    # Draai je dit los, zonder platform/reverse proxy, op je eigen machine?
+    # Voeg dan hieronder een host-poort toe, bijvoorbeeld:
+    # ports:
+    #   - "8080:3000"
