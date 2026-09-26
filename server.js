@@ -5,6 +5,17 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Verandert bij elke herstart van de container (dus bij elke deploy), en
+// wordt als ?v=... achter de CSS/JS-bestanden geplakt. Zo forceren we dat
+// browsers na een update altijd de nieuwe versie ophalen, in plaats van een
+// gecachete oude versie te blijven tonen.
+const BUILD_ID = Date.now().toString(36);
+
+function renderIndexHtml() {
+  const raw = fs.readFileSync(path.join(__dirname, 'public', 'index.html'), 'utf8');
+  return raw.replace(/(href|src)="(\/(?:css|js)\/[^"]+)"/g, `$1="$2?v=${BUILD_ID}"`);
+}
+
 // API: alle vliegtuigjes
 app.get('/api/planes', (req, res) => {
   const data = JSON.parse(fs.readFileSync(path.join(__dirname, 'data', 'planes.json'), 'utf8'));
@@ -19,10 +30,16 @@ app.get('/api/planes/:id', (req, res) => {
   res.json(plane);
 });
 
-app.use(express.static(path.join(__dirname, 'public'), { maxAge: '1h' }));
+// Statische bestanden mogen lang gecachet worden: de ?v=... in de HTML
+// verandert bij elke deploy, dus een nieuwe versie krijgt vanzelf een
+// nieuwe URL en omzeilt zo de cache van de browser.
+app.use(express.static(path.join(__dirname, 'public'), { maxAge: '7d' }));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  // index.html zelf nooit cachen, anders blijft een browser een oude
+  // ?v=... verwijzing tonen na een nieuwe deploy.
+  res.set('Cache-Control', 'no-cache');
+  res.send(renderIndexHtml());
 });
 
 app.listen(PORT, () => {
