@@ -1,0 +1,13 @@
+{
+  "name": "papieren-vliegtuigjes",
+  "version": "1.0.0",
+  "description": "Fancy collectie van papieren vliegtuigjes met vouwinstructies",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

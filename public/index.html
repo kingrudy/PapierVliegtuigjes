@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Papieren Vliegtuigjes — Een collectie om te vouwen en te vliegen</title>
+<meta name="description" content="Een fancy collectie klassieke en originele papieren vliegtuigjes, compleet met stap-voor-stap vouwinstructies.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✈️</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="bg-scene" aria-hidden="true">
+  <div class="cloud c1"></div>
+  <div class="cloud c2"></div>
+  <div class="cloud c3"></div>
+  <svg class="trail-plane" viewBox="0 0 64 64" aria-hidden="true">
+    <path d="M4 32 L52 20 L44 32 L52 44 Z" />
+  </svg>
+</div>
+
+<header class="site-header">
+  <div class="wrap header-row">
+    <a href="/" class="brand">
+      <span class="brand-icon">✈</span>
+      <span>Papieren&nbsp;Vliegtuigjes</span>
+    </a>
+    <nav class="header-nav">
+      <a href="#collectie">Collectie</a>
+      <a href="#over">Over dit project</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <p class="eyebrow">16 modellen · stap-voor-stap · gratis</p>
+      <h1>Vouw. Gooi. <span class="accent">Herhaal.</span></h1>
+      <p class="hero-copy">
+        Een handgemaakte collectie papieren vliegtuigjes — van de klassieke Pijl
+        tot de legendarische Nakamura Lock. Elk model heeft duidelijke
+        vouwdiagrammen, moeilijkheidsgraad en vliegkarakteristieken.
+      </p>
+      <div class="hero-actions">
+        <a href="#collectie" class="btn btn-primary">Bekijk de collectie ↓</a>
+      </div>
+      <div class="hero-stats">
+        <div><strong id="stat-count">16</strong><span>vliegtuigjes</span></div>
+        <div><strong>4</strong><span>categorieën</span></div>
+        <div><strong>100%</strong><span>gratis papier &amp; plezier</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="collectie" class="collection">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>De collectie</h2>
+        <p>Filter op vliegstijl om het model te vinden dat bij je past.</p>
+      </div>
+
+      <div class="filters" role="tablist" aria-label="Filter op categorie">
+        <button class="filter-chip is-active" data-cat="alle">Alle</button>
+        <button class="filter-chip" data-cat="ver">🎯 Ver vliegen</button>
+        <button class="filter-chip" data-cat="zweven">🪶 Zweven</button>
+        <button class="filter-chip" data-cat="stunt">🌀 Stunts</button>
+        <button class="filter-chip" data-cat="snelheid">⚡ Snelheid</button>
+      </div>
+
+      <div id="grid" class="grid" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <section id="over" class="about">
+    <div class="wrap about-inner">
+      <h2>Over dit project</h2>
+      <p>
+        Deze site is een digitale vouwboek: elk model komt met een korte
+        beschrijving, vliegkarakteristieken en een reeks geïllustreerde
+        vouwstappen. Pak een vel papier (A4 werkt prima) en begin bij het
+        model dat je aanspreekt.
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>Gemaakt met 📄 en een vleugje aerodynamica.</p>
+  </div>
+</footer>
+
+<div id="detail-overlay" class="detail-overlay" hidden>
+  <div class="detail-panel" role="dialog" aria-modal="true" aria-labelledby="detail-title">
+    <button class="detail-close" id="detail-close" aria-label="Sluiten">✕</button>
+    <div id="detail-content"></div>
+  </div>
+</div>
+
+<script src="/js/diagrams.js"></script>
+<script src="/js/app.js"></script>
+</body>
+</html>
