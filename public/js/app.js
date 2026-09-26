@@ -137,6 +137,9 @@
         <h3>Vouwinstructies</h3>
         <div class="step-dots" id="step-dots"></div>
       </div>
+      <p class="orientation-note">📍 De bovenkant van elke tekening is steeds de neus (voorkant) van het vliegtuigje.</p>
+      <div class="overview-strip" id="overview-strip"></div>
+      ${window.FoldDiagrams.renderLegend()}
       <div id="step-body"></div>
       <div class="step-nav">
         <button id="prev-step">← Vorige</button>
@@ -146,7 +149,26 @@
     document.getElementById('prev-step').addEventListener('click', () => goStep(-1));
     document.getElementById('next-step').addEventListener('click', () => goStep(1));
     renderStepDots();
+    renderOverviewStrip();
     renderStep();
+  }
+
+  function renderOverviewStrip() {
+    const steps = currentPlane.steps;
+    const strip = document.getElementById('overview-strip');
+    strip.innerHTML = steps
+      .map((step, i) => {
+        const prevStage = i === 0 ? 'vel' : steps[i - 1].stage;
+        const diagram = window.FoldDiagrams.renderFoldDiagram(prevStage, step.stage, step.action, { mini: true });
+        return `<button class="mini-step" data-i="${i}" title="Stap ${i + 1}: ${step.title}">${diagram}<span>${i + 1}</span></button>`;
+      })
+      .join('');
+    strip.querySelectorAll('.mini-step').forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentStep = parseInt(btn.dataset.i, 10);
+        renderStep();
+      });
+    });
   }
 
   function statCard(label, value) {
@@ -170,17 +192,29 @@
     });
   }
 
+  const ACTION_LABELS = {
+    'crease-vertical': 'Vouw & weer open',
+    'valley-diagonal-both': 'Bergvouw (naar boven)',
+    'valley-diagonal-both-2': 'Bergvouw (naar boven)',
+    'valley-small-tip': 'Kleine bergvouw',
+    'mountain-vertical': 'Dalvouw (naar achteren)',
+    'valley-horizontal-wings': 'Bergvouw (naar boven)',
+    'small-cuts': 'Knippen',
+    adjust: 'Bijstellen'
+  };
+
   function renderStep() {
     const steps = currentPlane.steps;
     const step = steps[currentStep];
     const prevStage = currentStep === 0 ? 'vel' : steps[currentStep - 1].stage;
     const diagram = window.FoldDiagrams.renderFoldDiagram(prevStage, step.stage, step.action);
+    const actionLabel = ACTION_LABELS[step.action];
 
     document.getElementById('step-body').innerHTML = `
       <div class="step-body">
         <div class="step-diagram">${diagram}</div>
         <div class="step-text">
-          <div class="step-count">Stap ${currentStep + 1} van ${steps.length}</div>
+          <div class="step-count">Stap ${currentStep + 1} van ${steps.length}${actionLabel ? ` · ${actionLabel}` : ''}</div>
           <h4>${step.title}</h4>
           <p>${step.text}</p>
         </div>
@@ -188,6 +222,9 @@
     `;
 
     document.querySelectorAll('#step-dots button').forEach((btn, i) => {
+      btn.classList.toggle('is-active', i === currentStep);
+    });
+    document.querySelectorAll('#overview-strip .mini-step').forEach((btn, i) => {
       btn.classList.toggle('is-active', i === currentStep);
     });
     document.getElementById('prev-step').disabled = currentStep === 0;

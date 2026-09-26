@@ -243,21 +243,59 @@ a { color: inherit; }
 }
 .step-dots button.is-active { background: linear-gradient(120deg, var(--accent), var(--accent-2)); color: #0b1120; border-color: transparent; }
 
-.step-body {
-  display: grid; grid-template-columns: 200px 1fr; gap: 28px; align-items: center;
-  background: var(--panel); border: 1px solid var(--panel-border); border-radius: 16px; padding: 24px;
-  min-height: 220px;
+.orientation-note {
+  font-size: 0.85rem; color: var(--text-dim); margin: -6px 0 16px;
 }
-.fold-diagram { width: 100%; height: auto; }
-.fold-diagram .paper { fill: rgba(238,242,255,0.92); stroke: #0b1120; stroke-width: 1.4; }
-.fold-diagram .wing { fill: rgba(167,139,250,0.85); }
-.fold-diagram .fuselage { fill: rgba(238,242,255,0.92); }
-.fold-diagram .ghost { fill: rgba(255,255,255,0.06); stroke: rgba(255,255,255,0.25); stroke-width: 1; stroke-dasharray: 3 3; }
-.fold-diagram .crease-valley { stroke: #38bdf8; stroke-width: 1.6; stroke-dasharray: 5 4; }
-.fold-diagram .crease-mountain { stroke: #f472b6; stroke-width: 1.6; stroke-dasharray: 2 4; }
-.fold-diagram .fold-arrow { fill: none; stroke: #facc15; stroke-width: 2; }
+
+.overview-strip {
+  display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 4px;
+  scrollbar-width: thin;
+}
+.mini-step {
+  flex: 0 0 auto; width: 52px; display: flex; flex-direction: column; align-items: center; gap: 4px;
+  background: transparent; border: 1px solid transparent; border-radius: 10px; padding: 4px;
+  cursor: pointer; opacity: 0.55; transition: opacity .18s, border-color .18s;
+}
+.mini-step:hover { opacity: 0.85; }
+.mini-step.is-active { opacity: 1; border-color: var(--accent); background: rgba(125,211,252,0.08); }
+.mini-step span { font-size: 0.65rem; color: var(--text-dim); }
+.fold-diagram-mini { width: 44px; height: auto; }
+
+.fold-legend {
+  display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 18px;
+  font-size: 0.76rem; color: var(--text-dim);
+}
+.legend-item { display: flex; align-items: center; gap: 6px; }
+.legend-swatch { width: 18px; height: 3px; border-radius: 2px; display: inline-block; }
+.legend-valley { background: repeating-linear-gradient(90deg, #38bdf8 0 5px, transparent 5px 9px); }
+.legend-mountain { background: repeating-linear-gradient(90deg, #f472b6 0 2px, transparent 2px 6px); }
+.legend-ghost { background: rgba(255,255,255,0.25); border: 1px dashed rgba(255,255,255,0.4); height: 10px; }
+.legend-arrow { width: 26px; height: 14px; }
+
+.step-body {
+  display: grid; grid-template-columns: 220px 1fr; gap: 28px; align-items: center;
+  background: var(--panel); border: 1px solid var(--panel-border); border-radius: 16px; padding: 24px;
+  min-height: 240px;
+}
+.step-diagram {
+  background: radial-gradient(120px 140px at 50% 40%, rgba(255,255,255,0.06), transparent 70%);
+  border-radius: 12px; padding: 10px;
+}
+.fold-diagram { width: 100%; height: auto; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.35)); }
+.fold-diagram .paper { fill: #f5f3ee; stroke: #0b1120; stroke-width: 1.6; stroke-linejoin: round; }
+.fold-diagram .wing { fill: #d8b4fe; stroke: #0b1120; stroke-width: 1.6; stroke-linejoin: round; }
+.fold-diagram .fuselage { fill: #f5f3ee; }
+.fold-diagram .spine { stroke: rgba(11,17,32,0.5); stroke-width: 1.2; }
+.fold-diagram .ghost { fill: rgba(255,255,255,0.05); stroke: rgba(255,255,255,0.3); stroke-width: 1; stroke-dasharray: 3 3; }
+.fold-diagram .crease-valley { stroke: #38bdf8; stroke-width: 2; stroke-dasharray: 5 4; stroke-linecap: round; }
+.fold-diagram .crease-mountain { stroke: #f472b6; stroke-width: 2; stroke-dasharray: 2 4; stroke-linecap: round; }
+.fold-diagram .fold-arrow { fill: none; stroke: #facc15; stroke-width: 2.5; stroke-linecap: round; }
 .fold-diagram .fold-arrow-head { fill: #facc15; }
 .fold-diagram .scissor { fill: none; stroke: #f87171; stroke-width: 2; stroke-linecap: round; }
+.fold-diagram-mini .fold-arrow,
+.fold-diagram-mini .crease-valley,
+.fold-diagram-mini .crease-mountain,
+.fold-diagram-mini .scissor { display: none; }
 
 .step-text .step-count { color: var(--accent); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 6px; }
 .step-text h4 { margin: 0 0 10px; font-size: 1.15rem; }
